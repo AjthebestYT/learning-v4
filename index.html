@@ -3,34 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>john pork 6767</title>
+  <title>Learning V3</title>
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@900&family=Segoe+UI:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
       --neon: #00f2ff;
       --neon-glow: rgba(0, 242, 255, 0.35);
-      --neon-border: #00f2ff;
       --bg: #0a0a12;
       --cursor-default: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M5 3l14 9-14 9V3z" fill="black" stroke="%2300f2ff" stroke-width="2" stroke-join="round"/><path d="M6 6l9 6-9 6V6z" fill="%2300f2ff"/></svg>') 0 0, auto;
       --cursor-pointer: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="%23ff00aa" stroke-width="2"/><circle cx="12" cy="12" r="2" fill="%23ff00aa"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="%23ff00aa" stroke-width="2"/></svg>') 12 12, pointer;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--bg); color: white; font-family: "Segoe UI", sans-serif; overflow: hidden; height: 100vh; cursor: var(--cursor-default); }
     
-    body {
-      background: radial-gradient(circle at top, rgba(0,242,255,0.09), transparent 16%), radial-gradient(circle at 80% 10%, rgba(255,0,170,0.08), transparent 20%), var(--bg);
-      color: white;
-      font-family: "Segoe UI", sans-serif;
-      overflow: hidden;
-      min-height: 100vh;
-      cursor: var(--cursor-default);
-    }
+    button, .nav-btn, .game-card { cursor: var(--cursor-pointer) !important; }
 
-    button, .nav-btn, .game-card, .theme-btn, #close-game, [onclick], a {
-      cursor: var(--cursor-pointer) !important;
-    }
-
-    /* Layout */
     #top-bar {
       position: fixed; top: 0; left: 0; right: 0; height: 60px;
       background: rgba(5, 8, 20, 0.9); backdrop-filter: blur(16px);
@@ -40,161 +28,23 @@
     }
 
     #nav {
-      position: fixed; top: 60px; left: 0; right: 0; min-height: 64px;
+      position: fixed; top: 60px; left: 0; right: 0; height: 64px;
       background: rgba(8, 12, 28, 0.92); backdrop-filter: blur(18px);
       display: flex; justify-content: center; align-items: center;
-      gap: 20px; z-index: 999; border-bottom: 1px solid rgba(0, 242, 255, 0.18);
+      gap: 15px; z-index: 999; border-bottom: 1px solid rgba(0, 242, 255, 0.18);
     }
 
     .nav-btn {
-      padding: 10px 20px; background: rgba(255,255,255,0.04);
+      padding: 8px 18px; background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.08); color: #c8d7ff;
-      font-weight: 700; text-transform: uppercase; font-size: 12px;
+      font-weight: 700; text-transform: uppercase; font-size: 11px;
       border-radius: 999px; transition: all 0.3s ease;
     }
 
     .nav-btn.active, .nav-btn:hover {
       color: white; border-color: var(--neon);
-      background: rgba(0, 242, 255, 0.1); box-shadow: 0 0 20px var(--neon-glow);
+      background: rgba(0, 242, 255, 0.1); box-shadow: 0 0 15px var(--neon-glow);
     }
 
     .content {
-      position: absolute; top: 124px; left: 0; right: 0; bottom: 0;
-      overflow: auto; display: none; padding: 30px;
-    }
-
-    .content.active { display: block; }
-
-    /* Cloud Game Embed Styling */
-    #cloud-game iframe {
-      width: 100%; height: 100%; border: none; border-radius: 12px;
-      box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
-    }
-
-    /* Other Sections (Shortened for brevity but functional) */
-    #title { font-family: "Unbounded"; font-weight: 900; background: linear-gradient(90deg, #ff00aa, var(--neon)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-    .welcome-text { font-family: "Unbounded"; font-size: 5rem; text-align: center; background: linear-gradient(90deg, #ff00cc, var(--neon)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
-    .game-card { background: rgba(20, 20, 35, 0.9); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 20px; text-align: center; }
-    #updates iframe { width: 100%; height: 100%; border: none; }
-  </style>
-</head>
-<body>
-
-  <div id="top-bar">
-    <div id="title">LEARNING V3</div>
-    <div id="status">00:00 | 100%</div>
-  </div>
-
-  <div id="nav">
-    <button class="nav-btn active" onclick="switchTab(0)">HOME</button>
-    <button class="nav-btn" onclick="switchTab(1)">GAMES</button>
-    <button class="nav-btn" onclick="switchTab(2)">MOVIES</button>
-    <button class="nav-btn" onclick="switchTab(3)">UPDATES</button>
-    <button class="nav-btn" onclick="switchTab(4)">CLOUD GAME</button>
-    <button class="nav-btn" onclick="openSettings()">SETTINGS</button>
-  </div>
-
-  <div id="home" class="content active">
-    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
-      <div class="welcome-text">WELCOME TO<br>LEARNING V3</div>
-      <p style="margin-top: 20px;">now with good games i think</p>
-    </div>
-  </div>
-
-  <div id="games" class="content">
-    <div class="grid">
-      <div class="game-card" data-url="minecraft.html">⛏️<br>Minecraft</div>
-      <div class="game-card" data-url="fnaf.html">🐻<br>FNAF</div>
-      <div class="game-card" data-url="slope1.html">🔴<br>Slope</div>
-      </div>
-  </div>
-
-  <div id="movies" class="content">
-    <div class="movies-bar" style="margin-bottom: 20px; display: flex; gap: 10px;">
-        <input id="movies-search" type="text" placeholder="Search..." style="padding: 10px; border-radius: 20px; border: 1px solid var(--neon); background: #111; color: white; flex: 1;">
-    </div>
-    <div class="grid" id="movies-grid"></div>
-  </div>
-
-  <div id="updates" class="content">
-    <iframe src="https://docs.google.com/document/d/1iDgURNHAHjC1LSzZ7y6IxyJmem_bS4d22apmq37zQfE/"></iframe>
-  </div>
-
-  <div id="cloud-game" class="content">
-    <iframe src="https://cdn.jsdelivr.net/gh/AjthebestYT/web@main/main-2604131056.svg" allow="autoplay; fullscreen; keyboard"></iframe>
-  </div>
-
-  <div id="player-modal" style="display:none; position:fixed; inset:0; background:black; z-index:4000;">
-    <div style="display:flex; justify-content:space-between; padding:20px;">
-        <span id="player-title">PLAYER</span>
-        <button onclick="closePlayer()" style="color:white; background:red; border:none; padding:10px;">CLOSE</button>
-    </div>
-    <div id="video-slot" style="height:90%;"></div>
-  </div>
-
-  <div id="settings-panel" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:3000; align-items:center; justify-content:center;">
-    <div style="background:#1a1a2e; padding:40px; border-radius:20px; border:2px solid var(--neon);">
-        <h2>SETTINGS</h2>
-        <button onclick="cloakInAboutBlank()" style="margin-top:20px; padding:10px;">Open in about:blank</button>
-        <button onclick="closeSettings()" style="display:block; margin-top:20px;">Close</button>
-    </div>
-  </div>
-
-  <script>
-    const API_KEY = atob('NzAzMWE0MDgzMThlYTFiNjlhOGIzMGE4MjNmOWRkNTc=');
-    let currentMedia = 'movie';
-
-    function switchTab(n) {
-      const tabs = ['home', 'games', 'movies', 'updates', 'cloud-game'];
-      document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-      
-      const target = tabs[n];
-      if (target) {
-        document.getElementById(target).classList.add('active');
-        const btns = document.querySelectorAll('.nav-btn');
-        if(btns[n]) btns[n].classList.add('active');
-      }
-      
-      if (target === 'movies') fetchMovies();
-    }
-
-    async function fetchMovies(query = '') {
-      const grid = document.getElementById('movies-grid');
-      const url = query ? `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}` : `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`;
-      const res = await fetch(url);
-      const data = await res.json();
-      grid.innerHTML = data.results.map(m => `<div class="game-card" onclick="openMovie(${m.id}, '${m.title}')"><img src="https://image.tmdb.org/t/p/w200${m.poster_path}" style="width:100%"><br>${m.title}</div>`).join('');
-    }
-
-    function openMovie(id, title) {
-      document.getElementById('player-modal').style.display = 'block';
-      document.getElementById('player-title').innerText = title;
-      document.getElementById('video-slot').innerHTML = `<iframe src="https://vidlink.pro/movie/${id}" style="width:100%;height:100%;border:none;" allowfullscreen></iframe>`;
-    }
-
-    function closePlayer() { document.getElementById('player-modal').style.display = 'none'; document.getElementById('video-slot').innerHTML = ''; }
-    function openSettings() { document.getElementById('settings-panel').style.display = 'flex'; }
-    function closeSettings() { document.getElementById('settings-panel').style.display = 'none'; }
-    
-    function updateStatus() {
-      const now = new Date();
-      document.getElementById('status').textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + " | 100%";
-    }
-    setInterval(updateStatus, 1000);
-
-    document.querySelectorAll('.game-card').forEach(card => {
-      card.addEventListener('click', () => {
-        const url = card.getAttribute('data-url');
-        if (url) window.open(url, '_blank');
-      });
-    });
-
-    function cloakInAboutBlank() {
-      const win = window.open('about:blank', '_blank');
-      win.document.write(`<iframe src="${window.location.href}" style="width:100vw;height:100vh;border:none;"></iframe>`);
-    }
-  </script>
-</body>
-</html>
+      position: absolute; top: 124px; left: 0
