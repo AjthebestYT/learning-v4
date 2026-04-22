@@ -47,4 +47,97 @@
     }
 
     .content {
-      position: absolute; top: 124px; left: 0
+      position: absolute; top: 124px; left: 0; right: 0; bottom: 0;
+      overflow: auto; display: none; padding: 20px;
+    }
+
+    .content.active { display: block; }
+
+    #cloud-game { height: calc(100vh - 124px); padding: 10px; overflow: hidden; }
+    #cloud-game iframe { width: 100%; height: 100%; border: none; border-radius: 12px; background: #000; }
+
+    #title { font-family: "Unbounded"; font-weight: 900; color: var(--neon); }
+    .welcome-text { font-family: "Unbounded"; font-size: 4rem; text-align: center; margin-top: 10%; color: var(--neon); }
+  </style>
+</head>
+<body>
+
+  <div id="top-bar">
+    <div id="title">LEARNING V3</div>
+    <div id="status">00:00 | 100%</div>
+  </div>
+
+  <div id="nav">
+    <button class="nav-btn active" onclick="switchTab(0)">HOME</button>
+    <button class="nav-btn" onclick="switchTab(1)">GAMES</button>
+    <button class="nav-btn" onclick="switchTab(2)">MOVIES</button>
+    <button class="nav-btn" onclick="switchTab(3)">UPDATES</button>
+    <button class="nav-btn" onclick="switchTab(4)">CLOUD GAME</button>
+    <button class="nav-btn" onclick="openSettings()">SETTINGS</button>
+  </div>
+
+  <div id="home" class="content active">
+    <div class="welcome-text">WELCOME TO<br>LEARNING V3</div>
+  </div>
+
+  <div id="games" class="content">
+    <p>Games list goes here...</p>
+  </div>
+
+  <div id="movies" class="content">
+    <p>Movies list goes here...</p>
+  </div>
+
+  <div id="updates" class="content">
+    <iframe src="https://docs.google.com/document/d/1iDgURNHAHjC1LSzZ7y6IxyJmem_bS4d22apmq37zQfE/" style="width:100%; height:100%; border:none;"></iframe>
+  </div>
+
+  <div id="cloud-game" class="content">
+    <iframe 
+      id="cloudmoon-frame"
+      src="https://cdn.jsdelivr.net/gh/CloudMoonApp/web@main/play-2604131056.html" 
+      allow="autoplay; fullscreen; keyboard; gamepad"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+
+  <div id="settings-panel" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:3000; display:none; align-items:center; justify-content:center;">
+    <div style="background:#1a1a2e; padding:40px; border-radius:20px; border:1px solid var(--neon);">
+      <h2 style="color:var(--neon)">SETTINGS</h2>
+      <button onclick="closeSettings()" style="margin-top:20px; padding:10px 20px;">CLOSE</button>
+    </div>
+  </div>
+
+  <script>
+    function switchTab(n) {
+      const tabs = ['home', 'games', 'movies', 'updates', 'cloud-game'];
+      document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      
+      const target = tabs[n];
+      if (target) {
+        document.getElementById(target).classList.add('active');
+        document.querySelectorAll('.nav-btn')[n].classList.add('active');
+        
+        // Fix for "Invalid Session": Refresh frame with new timestamp when clicked
+        if (target === 'cloud-game') {
+          const frame = document.getElementById('cloudmoon-frame');
+          const currentUrl = new URL("https://cdn.jsdelivr.net/gh/CloudMoonApp/web@main/play-2604131056.html");
+          currentUrl.searchParams.set("t", Date.now());
+          frame.src = currentUrl.toString();
+        }
+      }
+    }
+
+    function openSettings() { document.getElementById('settings-panel').style.display = 'flex'; }
+    function closeSettings() { document.getElementById('settings-panel').style.display = 'none'; }
+
+    function updateStatus() {
+      const now = new Date();
+      document.getElementById('status').textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + " | 100%";
+    }
+    setInterval(updateStatus, 1000);
+    updateStatus();
+  </script>
+</body>
+</html>
