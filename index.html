@@ -11,69 +11,54 @@
       --neon-glow: rgba(0, 242, 255, 0.35);
       --bg: #0a0a12;
       --cursor-default: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M5 3l14 9-14 9V3z" fill="black" stroke="%2300f2ff" stroke-width="2" stroke-join="round"/><path d="M6 6l9 6-9 6V6z" fill="%2300f2ff"/></svg>') 0 0, auto;
-      --cursor-pointer: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="%23ff00aa" stroke-width="2"/><circle cx="12" cy="12" r="2" fill="%23ff00aa"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="%23ff00aa" stroke-width="2"/></svg>') 12 12, pointer;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: var(--bg); color: white; font-family: "Segoe UI", sans-serif; overflow: hidden; height: 100vh; cursor: var(--cursor-default); }
-    
-    button, .nav-btn, .game-card { cursor: var(--cursor-pointer) !important; }
-
-    #top-bar {
-      position: fixed; top: 0; left: 0; right: 0; height: 60px;
-      background: rgba(5, 8, 20, 0.9); backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(0, 242, 255, 0.16);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 28px; z-index: 1000;
-    }
 
     #nav {
-      position: fixed; top: 60px; left: 0; right: 0; height: 64px;
-      background: rgba(8, 12, 28, 0.92); backdrop-filter: blur(18px);
+      position: fixed; top: 0; left: 0; right: 0; height: 70px;
+      background: rgba(8, 12, 28, 0.95); backdrop-filter: blur(10px);
       display: flex; justify-content: center; align-items: center;
-      gap: 15px; z-index: 999; border-bottom: 1px solid rgba(0, 242, 255, 0.18);
+      gap: 15px; z-index: 1000; border-bottom: 2px solid var(--neon);
     }
 
     .nav-btn {
-      padding: 8px 18px; background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08); color: #c8d7ff;
-      font-weight: 700; text-transform: uppercase; font-size: 11px;
-      border-radius: 999px; transition: all 0.3s ease;
+      padding: 10px 20px; background: rgba(255,255,255,0.05);
+      border: 1px solid var(--neon); color: white;
+      font-weight: 700; text-transform: uppercase; border-radius: 5px;
+      transition: 0.3s; cursor: pointer;
     }
 
     .nav-btn.active, .nav-btn:hover {
-      color: white; border-color: var(--neon);
-      background: rgba(0, 242, 255, 0.1); box-shadow: 0 0 15px var(--neon-glow);
+      background: var(--neon); color: black; box-shadow: 0 0 15px var(--neon-glow);
     }
 
     .content {
-      position: absolute; top: 124px; left: 0; right: 0; bottom: 0;
-      overflow: auto; display: none; padding: 20px;
+      position: absolute; top: 70px; left: 0; right: 0; bottom: 0;
+      display: none; padding: 20px;
     }
 
     .content.active { display: block; }
 
-    #cloud-game { height: calc(100vh - 124px); padding: 10px; overflow: hidden; }
-    #cloud-game iframe { width: 100%; height: 100%; border: none; border-radius: 12px; background: #000; }
+    #cloud-game iframe {
+      width: 100%; height: 100%; border: none; border-radius: 10px;
+      background: #000; box-shadow: 0 0 40px rgba(0,0,0,0.5);
+    }
 
-    #title { font-family: "Unbounded"; font-weight: 900; color: var(--neon); }
-    .welcome-text { font-family: "Unbounded"; font-size: 4rem; text-align: center; margin-top: 10%; color: var(--neon); }
+    .welcome-text {
+      font-family: "Unbounded"; font-size: 4rem; text-align: center;
+      margin-top: 15vh; color: var(--neon); text-shadow: 0 0 20px var(--neon-glow);
+    }
   </style>
 </head>
 <body>
-
-  <div id="top-bar">
-    <div id="title">LEARNING V3</div>
-    <div id="status">00:00 | 100%</div>
-  </div>
 
   <div id="nav">
     <button class="nav-btn active" onclick="switchTab(0)">HOME</button>
     <button class="nav-btn" onclick="switchTab(1)">GAMES</button>
     <button class="nav-btn" onclick="switchTab(2)">MOVIES</button>
-    <button class="nav-btn" onclick="switchTab(3)">UPDATES</button>
-    <button class="nav-btn" onclick="switchTab(4)">CLOUD GAME</button>
-    <button class="nav-btn" onclick="openSettings()">SETTINGS</button>
+    <button class="nav-btn" onclick="switchTab(3)">CLOUD GAME</button>
   </div>
 
   <div id="home" class="content active">
@@ -81,63 +66,40 @@
   </div>
 
   <div id="games" class="content">
-    <p>Games list goes here...</p>
+    <h2>Games Section</h2>
+    <p>Add your game cards here.</p>
   </div>
 
   <div id="movies" class="content">
-    <p>Movies list goes here...</p>
-  </div>
-
-  <div id="updates" class="content">
-    <iframe src="https://docs.google.com/document/d/1iDgURNHAHjC1LSzZ7y6IxyJmem_bS4d22apmq37zQfE/" style="width:100%; height:100%; border:none;"></iframe>
+    <h2>Movies Section</h2>
+    <p>Add your movie players here.</p>
   </div>
 
   <div id="cloud-game" class="content">
     <iframe 
-      id="cloudmoon-frame"
+      id="cloud-frame"
       src="https://cdn.jsdelivr.net/gh/CloudMoonApp/web@main/play-2604131056.html" 
       allow="autoplay; fullscreen; keyboard; gamepad"
       referrerpolicy="no-referrer-when-downgrade">
     </iframe>
   </div>
 
-  <div id="settings-panel" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:3000; display:none; align-items:center; justify-content:center;">
-    <div style="background:#1a1a2e; padding:40px; border-radius:20px; border:1px solid var(--neon);">
-      <h2 style="color:var(--neon)">SETTINGS</h2>
-      <button onclick="closeSettings()" style="margin-top:20px; padding:10px 20px;">CLOSE</button>
-    </div>
-  </div>
-
   <script>
     function switchTab(n) {
-      const tabs = ['home', 'games', 'movies', 'updates', 'cloud-game'];
+      const tabs = ['home', 'games', 'movies', 'cloud-game'];
       document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
       
       const target = tabs[n];
-      if (target) {
-        document.getElementById(target).classList.add('active');
-        document.querySelectorAll('.nav-btn')[n].classList.add('active');
-        
-        // Fix for "Invalid Session": Refresh frame with new timestamp when clicked
-        if (target === 'cloud-game') {
-          const frame = document.getElementById('cloudmoon-frame');
-          const currentUrl = new URL("https://cdn.jsdelivr.net/gh/CloudMoonApp/web@main/play-2604131056.html");
-          currentUrl.searchParams.set("t", Date.now());
-          frame.src = currentUrl.toString();
-        }
+      document.getElementById(target).classList.add('active');
+      document.querySelectorAll('.nav-btn')[n].classList.add('active');
+
+      // Refresh Cloud Game session on click
+      if (target === 'cloud-game') {
+        const frame = document.getElementById('cloud-frame');
+        frame.src = "https://cdn.jsdelivr.net/gh/CloudMoonApp/web@main/play-2604131056.html?t=" + Date.now();
       }
     }
-
-    function openSettings() { document.getElementById('settings-panel').style.display = 'flex'; }
-    function closeSettings() { document.getElementById('settings-panel').style.display = 'none'; }
-
-    function updateStatus() {
-      const now = new Date();
-      document.getElementById('status').textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + " | 100%";
-    }
-    setInterval(updateStatus, 1000);
-    updateStatus();
   </script>
 </body>
 </html>
